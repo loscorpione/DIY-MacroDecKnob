@@ -105,8 +105,10 @@ void setup() {
   } */
 
   // ---------------------- Inizializza  ---------------------
-  Wire.begin();
+  Wire.begin(I2C_SDA, I2C_SCL);
+  Serial.println("wire begin");
   bleKeyboard.begin();
+  Serial.println("ble begin");
   customKeypad.setHoldTime(500);
   customKeypad.setDebounceTime(50);
 
@@ -121,7 +123,7 @@ void setup() {
   pinMode(KEYPAD_MODE_PIN, INPUT);    // Pin per selezione profilo keypad 
   pinMode(ENCODER_MODE_PIN, INPUT);   // Pin per selezione profilo encoder
 
-  pinMode(BACKLIGHT_PIN, OUTPUT);     // Pin abilitazione retroilluminazione TFT
+  pinMode(BACKLIGHT_PIN, OUTPUT | OPEN_DRAIN);     // Pin abilitazione retroilluminazione TFT
   digitalWrite(BACKLIGHT_PIN, HIGH);  // Accende la retroilluminazione
 
   // ---------------------- Inizializza Wake-up ---------------------
@@ -148,7 +150,7 @@ void setup() {
   //---Visualizza Profili e icone tastiera/batteria/Connessione_BLE---
     updateDisplay(profiles[KeyProfileIndex]);
     float voltage = readBatteryVoltage();
-    drawBatteryIcon(200, 5, voltage);
+    drawBatteryIcon(280, 5, voltage);
     drawKeyIcons();
     drawBLEStatusIcon(true); 
 }
@@ -253,7 +255,7 @@ void loop() {
 
     //Batteria
     float voltage = readBatteryVoltage();
-    drawBatteryIcon(200, 5, voltage);                       // ridisegna la batteria su TFT
+    drawBatteryIcon(280, 5, voltage);                       // ridisegna la batteria su TFT
     int levelBatBLE = map(voltage * 100, 340, 420, 0, 100);
     bleKeyboard.setBatteryLevel(levelBatBLE);               // aggiorna livello batteria su BLE
 

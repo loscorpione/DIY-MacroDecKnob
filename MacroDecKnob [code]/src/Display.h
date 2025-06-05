@@ -69,12 +69,12 @@ inline void drawBatteryIcon(int x, int y, float voltage) {
 
 //--------- Aggiorna riquadri profili ---------
 inline void updateDisplay(const char *keyName) {
-  tft.fillRect(0, 0, 190, 48, TFT_BLACK);
+  tft.fillRect(0, 0, 270, 48, TFT_BLACK);
   tft.setTextSize(2);
   tft.setTextColor(TFT_WHITE, TFT_BLUE);
-  tft.fillRoundRect(1, 1, 190, 25, 4, TFT_BLUE);
+  tft.fillRoundRect(1, 1, 270, 25, 4, TFT_BLUE);
   tft.setCursor(7, 7); tft.print("KEY:"); tft.print(keyName);
-  tft.fillRoundRect(1, 30, 190, 25, 4, TFT_BLUE);
+  tft.fillRoundRect(1, 30, 270, 25, 4, TFT_BLUE);
   tft.setCursor(7, 34); tft.print("KNOB:");
   switch (EncoderProfileIndex) {
     case 0: tft.print("Volume"); break;
@@ -86,15 +86,16 @@ inline void updateDisplay(const char *keyName) {
 
 // --- Disegna la matrice 3x4 di icone con spaziatura ---
 inline void drawKeyIcons() {
-  const int iconSize = 55;
+  const int iconSizeX = 76;
+  const int iconSizeY = 55;
   const int spacingX = 5;
   const int spacingY = 5;
   for (int r = 0; r < ROWS; r++) {
     for (int c = 0; c < COLS; c++) {
       KeyAction act = profileKeyActions[KeyProfileIndex][r][c];
       if (act.iconFile && strlen(act.iconFile) > 0) {
-        int x = c * (iconSize + spacingX);       // inizia da X = 0
-        int y = 60 + r * (iconSize + spacingY);   // inizia da Y = 60
+        int x = c * (iconSizeX + spacingX);       // inizia da X = 0
+        int y = 60 + r * (iconSizeY + spacingY);   // inizia da Y = 60
         tftDrawBmp(act.iconFile, x, y);
       }
     }
@@ -103,7 +104,7 @@ inline void drawKeyIcons() {
  
 //--------- Visualizza iconaBLE se connesso ---------
 inline void drawBLEStatusIcon(bool connected) {
-  int x = 198;  // Regola in base alla tua interfaccia
+  int x = 278;  // Regola in base alla tua interfaccia
   int y = 32;
 
   if (connected) {

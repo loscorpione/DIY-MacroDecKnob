@@ -7,9 +7,11 @@
 #define KEYPAD_MODE_PIN      15
 #define ENCODER_MODE_PIN     17
 #define BATTERY_ADC_PIN      35
+#define I2C_SDA              22
+#define I2C_SCL              21
 
 // ---------------- COSTANTI ----------------
-#define SLEEP_TIME           600000    // 10 minuti
+#define SLEEP_TIME           10000    // 10 minuti
 #define NUM_KEY_PROFILES     3
 #define NUM_ENCODER_PROFILES 3
 
