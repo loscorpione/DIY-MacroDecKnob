@@ -6,11 +6,13 @@
 #include <FS.h>
 #include <SPIFFS.h>
 #include "Config.h"
-#include "Key_Actions.h"
+#include "User_Config.h"
+
 
 extern TFT_eSPI tft;
 extern int KeyProfileIndex;
 extern int EncoderProfileIndex;
+extern const char* encoderNames[]; // Declaration; ensure definition exists in a .cpp file
 
 // --- Funzioni di supporto per leggere BMP da SPIFFS ---
   static uint16_t read16(fs::File &f) {
@@ -76,12 +78,12 @@ inline void updateDisplay(const char *keyName) {
   tft.setCursor(7, 7); tft.print("KEY:"); tft.print(keyName);
   tft.fillRoundRect(1, 30, 270, 25, 4, TFT_BLUE);
   tft.setCursor(7, 34); tft.print("KNOB:");
-  switch (EncoderProfileIndex) {
-    case 0: tft.print("Volume"); break;
-    case 1: tft.print("Timeline"); break;
-    case 2: tft.print("Scroll"); break;
-    default: tft.print("Altro"); break;
-  }
+  if (EncoderProfileIndex < NUM_ENCODER_PROFILES) {
+    tft.print(encoderNames[EncoderProfileIndex]);
+  } else {
+    tft.print("Altro");
+}
+
 }
 
 // --- Disegna la matrice 3x4 di icone con spaziatura ---
@@ -119,5 +121,26 @@ inline void drawBLEStatusIcon(bool connected) {
     tft.fillRect(x, y, 40, 20, TFT_BLACK);
   }
 }
+
+//--------- Visualizza logo iniziale ---------
+inline void showLogo(const char* filename, uint16_t durationMs) {
+  File logoFile = SPIFFS.open(filename, "r");
+  if (!logoFile) {
+    //Serial.println("❌ Logo non trovato!");
+    return;
+  }
+
+  // Centra il logo sul display (modifica se il tuo display ha dimensioni diverse)
+  int x = (tft.width() - 230) / 2;
+  int y = (tft.height() - 230) / 2;
+
+  //Serial.println("✅ Mostro il logo iniziale...");
+  tft.fillScreen(TFT_BLACK);
+  tftDrawBmp(filename, x, y);  // Assicurati che `drawBmp()` sia definita correttamente
+  logoFile.close();
+  delay(durationMs);
+  tft.fillScreen(TFT_BLACK);
+}
+
 
 #endif // DISPLAY_H

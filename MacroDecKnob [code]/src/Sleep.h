@@ -13,10 +13,7 @@ extern int EncoderProfileIndex;
 
 // ---------------- Routine Deep Sleep mode ---------------
 inline void enterDeepSleep() {
-  tft.fillScreen(TFT_BLACK);
-  tft.setCursor(10, 20);
-  tft.setTextSize(2);
-  tft.print("Risparmio energia");
+  showLogo("/Sleep mode.bmp", 3000);  // logo sleep per 3 secondi
 
   preferences.begin("macrodeck", false);
   preferences.putInt("KeyProfile", KeyProfileIndex);

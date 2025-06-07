@@ -19,23 +19,9 @@
 #include <Preferences.h>
 #include "Config.h"
 #include "Display.h"
-#include "Key_Actions.h"
+#include "User_Config.h"
 #include "Sleep.h"
 
-/* #ifdef ARDUINO_SAMD_VARIANT_COMPLIANCE
-  #define SERIAL SerialUSB
-  #define SYS_VOL   3.3
-#else
-  #define SERIAL Serial
-  #define SYS_VOL   5
-#endif */
-
-// -------- Definizione nomi profili keypad -------------
-const char* profiles[NUM_KEY_PROFILES] = {
-  "Filmora",
-  "Produzione",
-  "OBS Studio"
-};
 
 // ------------------------ Oggetti ----------------------
 BleKeyboard bleKeyboard("MacroDecKnob", "ESP32-WROOM", 50);
@@ -118,6 +104,9 @@ void setup() {
   tft.fillScreen(TFT_BLACK);
   tft.setTextColor(TFT_WHITE, TFT_BLACK);
   tft.setTextSize(2);
+
+  // ---------------------- visualizza logo iniziale ---------------------
+  showLogo("/Logo.bmp", 5000);  // logo iniziale per 5 secondi
 
   pinMode(WAKEUP_PIN, INPUT);         // Pin per WAKEUP
   pinMode(KEYPAD_MODE_PIN, INPUT);    // Pin per selezione profilo keypad 
@@ -227,16 +216,16 @@ void loop() {
     if (Knob != oldKnob) {
       switch (EncoderProfileIndex) {
         case 0: // azione encoder per profile0
-          if (oldKnob > Knob) bleKeyboard.write(KEY_UP_ARROW);
-          if (oldKnob < Knob) bleKeyboard.write(KEY_DOWN_ARROW);
+          if (oldKnob > Knob) bleKeyboard.write(DOWN_ENC_PRO_0);
+          if (oldKnob < Knob) bleKeyboard.write(UP_ENC_PRO_0);
           break;
         case 1: // azione encoder per profile1
-          if (oldKnob > Knob) bleKeyboard.write(KEY_LEFT_ARROW);
-          if (oldKnob < Knob) bleKeyboard.write(KEY_RIGHT_ARROW);
+          if (oldKnob > Knob) bleKeyboard.write(DOWN_ENC_PRO_1);
+          if (oldKnob < Knob) bleKeyboard.write(UP_ENC_PRO_1);
           break;
         case 2: // azione encoder per profile2
-          if (oldKnob > Knob) bleKeyboard.write(KEY_PAGE_UP);
-          if (oldKnob < Knob) bleKeyboard.write(KEY_PAGE_DOWN);
+          if (oldKnob > Knob) bleKeyboard.write(DOWN_ENC_PRO_2);
+          if (oldKnob < Knob) bleKeyboard.write(UP_ENC_PRO_2);
           break;
       }
       oldKnob = Knob;
@@ -246,12 +235,25 @@ void loop() {
     }
   }
 
+  // if (abs(delta) > Sogl) {
+  //   Knob += (delta > 0) ? StepSize : -StepSize;
+  //   if (Knob != oldKnob) {
+  //     auto enc = profileEncoderActions[EncoderProfileIndex];
+  //     if (Knob > oldKnob) bleKeyboard.write(enc.cwKey);
+  //     else bleKeyboard.write(enc.ccwKey);
+  //     oldKnob = Knob;
+  //     LastAngle = CurrentAngle;
+  //     lastActivityTime = millis();
+  //     delay(100);
+  //  }
+  // }
+
   if (millis() - lastActivityTime > SLEEP_TIME) {
     enterDeepSleep();
   }
 
-  // ---------Aggiorna stato batteria e BLE ogni 10 secondi---------
-  if (millis() - lastBatteryUpdate > 10000) { 
+  // ---------Aggiorna stato batteria e BLE ogni minuto---------
+  if (millis() - lastBatteryUpdate > 60000) { 
 
     //Batteria
     float voltage = readBatteryVoltage();
