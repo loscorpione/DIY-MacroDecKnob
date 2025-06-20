@@ -5,7 +5,7 @@
       "Application": "Pcbnew",
       "Version": "9.0.0"
     },
-    "CreationDate": "2025-04-18T21:36:22+02:00"
+    "CreationDate": "2025-06-20T14:43:30+02:00"
   },
   "GeneralSpecs": {
     "ProjectId": {
@@ -14,8 +14,8 @@
       "Revision": "rev?"
     },
     "Size": {
-      "X": 177.0814,
-      "Y": 107.149
+      "X": 177.1814,
+      "Y": 107.249
     },
     "LayerNumber": 2,
     "BoardThickness": 1.6,
@@ -32,13 +32,33 @@
   ],
   "FilesAttributes": [
     {
+      "Path": "MacroDecKnob-F_Cu.gbr",
+      "FileFunction": "Copper,L1,Top",
+      "FilePolarity": "Positive"
+    },
+    {
       "Path": "MacroDecKnob-B_Cu.gbr",
       "FileFunction": "Copper,L2,Bot",
       "FilePolarity": "Positive"
     },
     {
+      "Path": "MacroDecKnob-F_Paste.gbr",
+      "FileFunction": "SolderPaste,Top",
+      "FilePolarity": "Positive"
+    },
+    {
       "Path": "MacroDecKnob-B_Paste.gbr",
       "FileFunction": "SolderPaste,Bot",
+      "FilePolarity": "Positive"
+    },
+    {
+      "Path": "MacroDecKnob-F_Silkscreen.gbr",
+      "FileFunction": "Legend,Top",
+      "FilePolarity": "Positive"
+    },
+    {
+      "Path": "MacroDecKnob-B_Silkscreen.gbr",
+      "FileFunction": "Legend,Bot",
       "FilePolarity": "Positive"
     },
     {
