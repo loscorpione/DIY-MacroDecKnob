@@ -24,7 +24,7 @@
 
 
 // ------------------------ Oggetti ----------------------
-BleKeyboard bleKeyboard("MacroDecKnob", "ESP32-WROOM", 50);
+BleKeyboard bleKeyboard("MacroDecKnob", "ESP32-WROOM", 100);
 TFT_eSPI tft = TFT_eSPI();
 AMS_5600 ams5600;
 Preferences preferences;
@@ -52,7 +52,7 @@ unsigned long lastBatteryUpdate = 0;
 // ------------------- Encoder Variabili --------------------
 volatile int Knob = 0; 
 volatile int oldKnob = -999; 
-volatile int StepSize = 20; 
+volatile int StepSize = 10; 
 volatile int LastAngle = 0; 
 volatile int Sogl = 40; 
 volatile int CurrentAngle;  
@@ -65,12 +65,20 @@ bool lastEncoderButton = HIGH;
 // --------------------- BLE connection flag-------------------
 bool previousBLEState = false;
 
-// ------------------ lettura tensione batteria ---------------
+// ------------------ Funzione lettura tensione batteria ---------------
 float readBatteryVoltage() {
   int adcRaw = analogRead(BATTERY_ADC_PIN);
   float voltageAdc = ((float)adcRaw / 4095.0) * 3.3; // ADC 12 bit su 3.3V
   float voltageBat = voltageAdc / 0.767;             // Calcolo Vbat reale
   return voltageBat;
+}
+
+// ------------------ Funzione per aggiornare la batteria (TFT + BLE) ------------------ 
+void updateBatteryStatus() {
+    float voltage = readBatteryVoltage();
+    drawBatteryIcon(280, 5, voltage);                       // ridisegna la batteria su TFT
+    int levelBatBLE = map(voltage * 100, 340, 420, 0, 100);
+    bleKeyboard.setBatteryLevel(levelBatBLE);               // aggiorna livello batteria su BLE
 }
 
 void setup() {
@@ -79,7 +87,7 @@ void setup() {
 
   // --------------Montaggio SPIFFS e test come già fatto…-----------
   if (!SPIFFS.begin(true)) { /* error handling */ }
-  Serial.println("✅ SPIFFS OK");
+  //Serial.println("✅ SPIFFS OK");
 
   /* // Debug stampa tutti i file in SPIFFS
   Serial.println("Contenuto SPIFFS:");
@@ -94,26 +102,27 @@ void setup() {
   Wire.begin(I2C_SDA, I2C_SCL);
   Serial.println("wire begin");
   bleKeyboard.begin();
-  Serial.println("ble begin");
+  //Serial.println("ble begin");
   customKeypad.setHoldTime(500);
   customKeypad.setDebounceTime(50);
 
   // ---------------------- Inizializza Display ---------------------
   tft.init(); 
-  tft.setRotation(1);
+  tft.setRotation(3);
   tft.fillScreen(TFT_BLACK);
   tft.setTextColor(TFT_WHITE, TFT_BLACK);
   tft.setTextSize(2);
+  pinMode(BACKLIGHT_PIN, OUTPUT);     // Pin abilitazione retroilluminazione TFT
+  digitalWrite(BACKLIGHT_PIN, HIGH);  // Accende la retroilluminazione
 
   // ---------------------- visualizza logo iniziale ---------------------
-  showLogo("/Logo.bmp", 5000);  // logo iniziale per 5 secondi
+  showLogo("/Logo.bmp", 3000);  // logo iniziale per 5 secondi
 
   pinMode(WAKEUP_PIN, INPUT);         // Pin per WAKEUP
   pinMode(KEYPAD_MODE_PIN, INPUT);    // Pin per selezione profilo keypad 
   pinMode(ENCODER_MODE_PIN, INPUT);   // Pin per selezione profilo encoder
 
-  pinMode(BACKLIGHT_PIN, OUTPUT | OPEN_DRAIN);     // Pin abilitazione retroilluminazione TFT
-  digitalWrite(BACKLIGHT_PIN, HIGH);  // Accende la retroilluminazione
+  
 
   // ---------------------- Inizializza Wake-up ---------------------
   esp_sleep_wakeup_cause_t wakeup_reason = esp_sleep_get_wakeup_cause();
@@ -138,10 +147,10 @@ void setup() {
     
   //---Visualizza Profili e icone tastiera/batteria/Connessione_BLE---
     updateDisplay(profiles[KeyProfileIndex]);
-    float voltage = readBatteryVoltage();
-    drawBatteryIcon(280, 5, voltage);
+    delay(300);
     drawKeyIcons();
-    drawBLEStatusIcon(true); 
+    updateBatteryStatus();
+    //drawBLEStatusIcon(true); 
 }
 
 void loop() {
@@ -235,31 +244,14 @@ void loop() {
     }
   }
 
-  // if (abs(delta) > Sogl) {
-  //   Knob += (delta > 0) ? StepSize : -StepSize;
-  //   if (Knob != oldKnob) {
-  //     auto enc = profileEncoderActions[EncoderProfileIndex];
-  //     if (Knob > oldKnob) bleKeyboard.write(enc.cwKey);
-  //     else bleKeyboard.write(enc.ccwKey);
-  //     oldKnob = Knob;
-  //     LastAngle = CurrentAngle;
-  //     lastActivityTime = millis();
-  //     delay(100);
-  //  }
-  // }
-
   if (millis() - lastActivityTime > SLEEP_TIME) {
     enterDeepSleep();
   }
 
   // ---------Aggiorna stato batteria e BLE ogni minuto---------
-  if (millis() - lastBatteryUpdate > 60000) { 
+  if (millis() - lastBatteryUpdate > 5000) { 
 
-    //Batteria
-    float voltage = readBatteryVoltage();
-    drawBatteryIcon(280, 5, voltage);                       // ridisegna la batteria su TFT
-    int levelBatBLE = map(voltage * 100, 340, 420, 0, 100);
-    bleKeyboard.setBatteryLevel(levelBatBLE);               // aggiorna livello batteria su BLE
+    updateBatteryStatus();
 
     //Connessione BLE
       bool currentBLEState = bleKeyboard.isConnected();

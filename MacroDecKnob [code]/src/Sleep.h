@@ -20,8 +20,8 @@ inline void enterDeepSleep() {
   preferences.putInt("EncoderProfile", EncoderProfileIndex);
   preferences.end();
 
-  delay(3000);
   digitalWrite(BACKLIGHT_PIN, LOW); // Spegne retroilluminazione
+  delay(3000);
   esp_sleep_enable_ext1_wakeup((1ULL << WAKEUP_PIN), ESP_EXT1_WAKEUP_ALL_LOW);
   //Serial.println("Going into deep sleep...");
   delay(100);

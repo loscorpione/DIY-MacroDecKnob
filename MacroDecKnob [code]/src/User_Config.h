@@ -35,15 +35,15 @@ struct KeyAction {
 static const KeyAction profileKeyActions[NUM_KEY_PROFILES][ROWS][COLS] = {
 
   { // Profile 0 - Filmora  --------------------------------------------------
-    {{KEY_LEFT_CTRL, 0, 'z', "/Annulla.bmp"},                     // KEY 1
-    {KEY_LEFT_CTRL, 0, 'y', "/Rifai.bmp"},                        // KEY 2
-    {0, 0, KEY_DELETE, "/Cancella.bmp"},                          // KEY 3
-    {KEY_LEFT_CTRL, 0, 's', "/Salva.bmp"}},                       // KEY 4
+    {{KEY_LEFT_CTRL, 0, 's', "/Salva.bmp"},                       // KEY 1 
+    {0, 0, KEY_DELETE, "/Cancella.bmp"},                          // KEY 2
+    {KEY_LEFT_CTRL, 0, 'z', "/Annulla.bmp"},                      // KEY 3
+    {KEY_LEFT_CTRL, 0, 'y', "/Rifai.bmp"}},                       // KEY 4
 
     {{KEY_LEFT_CTRL, KEY_LEFT_ALT, 'c', "/Copia_eff.bmp"},        // KEY 5
     {KEY_LEFT_CTRL, KEY_LEFT_ALT, 'v', "/Incolla_eff.bmp"},       // KEY 6 
     {KEY_LEFT_CTRL, 0, 'd', "/Duplica.bmp"},                      // KEY 7
-    {0, KEY_LEFT_ALT, 'r', "/Rec_Audio.bmp"}},                    // KEY 8
+    {0, KEY_LEFT_ALT, 'v', "/Rec_Audio.bmp"}},                    // KEY 8
 
     {{KEY_LEFT_CTRL, 0, KEY_NUM_MINUS, "/Timeline-.bmp"},         // KEY 9
     {KEY_LEFT_CTRL, 0, KEY_NUM_PLUS, "/Timeline+.bmp"},           // KEY 10
@@ -52,18 +52,18 @@ static const KeyAction profileKeyActions[NUM_KEY_PROFILES][ROWS][COLS] = {
   },
 
   { // Profile 1 - Produzione --------------------------------------------------
-    {{KEY_LEFT_CTRL, 0, 'z', "/Annulla.bmp"},                     // KEY 1               
-    {KEY_LEFT_CTRL, 0, 'y', "/Rifai.bmp"},                        // KEY 2                    
-    {0, 0, KEY_DELETE, "/Cancella.bmp"},                          // KEY 3                
-    {KEY_LEFT_CTRL, 0, 's', "/Salva.bmp"}},                       // KEY 4
+    {{KEY_LEFT_CTRL, 0, 's', "/Salva.bmp"},                       // KEY 1 
+    {0, 0, KEY_DELETE, "/Cancella.bmp"},                          // KEY 2
+    {KEY_LEFT_CTRL, 0, 'z', "/Annulla.bmp"},                      // KEY 3
+    {KEY_LEFT_CTRL, 0, 'y', "/Rifai.bmp"}},                       // KEY 4
 
-    {{0, 0, 0, "/Obs.bmp"},                                       // KEY 5        
-    {0, 0, 0, "/Filmora.bmp"},                                    // KEY 6 
-    {0, 0, 0, "/www.bmp"},                                        // KEY 7
-    {0, 0, 0, "/Calcolatrice.bmp"}},                              // KEY 8
+    {{0, 0, 0, "/Vuota.bmp"},                                     // KEY 5        
+    {0, 0, 0, "/Vuota.bmp"},                                      // KEY 6 
+    {0, 0, 0, "/Vuota.bmp"},                                      // KEY 7
+    {0, 0, 0, "/Vuota.bmp"}},                                     // KEY 8
 
     {{KEY_LEFT_CTRL, 0, 'x', "/Taglia.bmp"},                      // KEY 9  
-    {KEY_LEFT_CTRL, 0, 'C', "/Copia.bmp"},                        // KEY 10
+    {KEY_LEFT_CTRL, 0, 'c', "/Copia.bmp"},                        // KEY 10
     {KEY_LEFT_CTRL, 0, 'v', "/Incolla.bmp"},                      // KEY 11
     {KEY_LEFT_CTRL, 0, 'd', "/Duplica.bmp"}}                      // KEY 12
   },
@@ -74,15 +74,15 @@ static const KeyAction profileKeyActions[NUM_KEY_PROFILES][ROWS][COLS] = {
     {KEY_LEFT_CTRL, KEY_LEFT_ALT, '3', "/Scena3.bmp"},            // KEY 3
     {KEY_LEFT_CTRL, KEY_LEFT_ALT, '4', "/Scena4.bmp"}},           // KEY 4
 
-    {{KEY_LEFT_CTRL, KEY_LEFT_ALT, '5', "/Mute_mic.bmp"},         // KEY 5
-    {KEY_LEFT_CTRL, KEY_LEFT_ALT, '6', "/Vuota.bmp"},             // KEY 6
-    {KEY_LEFT_CTRL, KEY_LEFT_ALT, '7', "/Vuota.bmp"},             // KEY 7
-    {KEY_LEFT_CTRL, KEY_LEFT_ALT, '8', "/Vuota.bmp"}},            // KEY 8
+    {{KEY_LEFT_CTRL, KEY_LEFT_ALT, '5', "/Scena5.bmp"},           // KEY 5
+    {KEY_LEFT_CTRL, KEY_LEFT_ALT, '6', "/Scena6.bmp"},            // KEY 6
+    {KEY_LEFT_CTRL, KEY_LEFT_ALT, '7', "/Scena7.bmp"},            // KEY 7
+    {KEY_LEFT_CTRL, KEY_LEFT_ALT, '8', "/Scena8.bmp"}},           // KEY 8
 
-    {{KEY_LEFT_CTRL, KEY_LEFT_ALT, '9', "/Rec.bmp"},              // KEY 9
-    {KEY_LEFT_CTRL, KEY_LEFT_ALT, 'Q', "/Pausa.bmp"},             // KEY 10
-    {KEY_LEFT_CTRL, KEY_LEFT_ALT, 'Z', "/Stream.bmp"},            // KEY 11
-    {KEY_LEFT_CTRL, KEY_LEFT_ALT, 'X', "/Vuota.bmp"}}             // KEY 12
+    {{KEY_LEFT_CTRL, KEY_LEFT_ALT, '9', "/Stream.bmp"},           // KEY 9
+    {KEY_LEFT_CTRL, KEY_LEFT_ALT, 'Q', "/Rec.bmp"},               // KEY 10
+    {KEY_LEFT_CTRL, KEY_LEFT_ALT, 'Z', "/Mute_mic.bmp"},          // KEY 11
+    {KEY_LEFT_CTRL, KEY_LEFT_ALT, 'X', "/Pausa.bmp"}}             // KEY 12
   }
 };
 

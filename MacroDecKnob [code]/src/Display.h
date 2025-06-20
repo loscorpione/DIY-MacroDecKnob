@@ -131,8 +131,8 @@ inline void showLogo(const char* filename, uint16_t durationMs) {
   }
 
   // Centra il logo sul display (modifica se il tuo display ha dimensioni diverse)
-  int x = (tft.width() - 230) / 2;
-  int y = (tft.height() - 230) / 2;
+  int x = (tft.width() - 115) / 2;
+  int y = (tft.height() - 115) / 2;
 
   //Serial.println("✅ Mostro il logo iniziale...");
   tft.fillScreen(TFT_BLACK);
