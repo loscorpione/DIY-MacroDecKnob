@@ -5,6 +5,12 @@
 #include <Arduino.h>
 #include "Config.h"
 
+
+// -----------------------------------------------------
+// DEFINIZIONE TEMPO DI INATTIVITA' PER  SONNO PROFONDO 
+// -----------------------------------------------------
+#define SLEEP_TIME           600000                             // Time before Sleep 600000 millis = 10 minuti
+
 // ----------------------------------------
 // DEFINIZIONE NOMI DEI PROFILI DEL KEYPAD
 // ----------------------------------------
@@ -30,7 +36,7 @@ struct KeyAction {
 };
 
 // ------------------------------
-// TABELLA DEI PROFILI TASTIERA
+// TABELLA SHORTCUT DEI PROFILI TASTIERA
 // ------------------------------
 static const KeyAction profileKeyActions[NUM_KEY_PROFILES][ROWS][COLS] = {
 

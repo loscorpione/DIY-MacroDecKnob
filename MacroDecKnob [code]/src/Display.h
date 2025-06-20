@@ -106,7 +106,7 @@ inline void drawKeyIcons() {
  
 //--------- Visualizza iconaBLE se connesso ---------
 inline void drawBLEStatusIcon(bool connected) {
-  int x = 278;  // Regola in base alla tua interfaccia
+  int x = 278; 
   int y = 32;
 
   if (connected) {
@@ -117,8 +117,7 @@ inline void drawBLEStatusIcon(bool connected) {
       icon.close();
     }
   } else {
-    // Cancella l'area (ad esempio riempiendo con sfondo nero)
-    tft.fillRect(x, y, 40, 20, TFT_BLACK);
+    tft.fillRect(x, y, 40, 20, TFT_BLACK); // Cancella l'area riempiendo con sfondo nero
   }
 }
 

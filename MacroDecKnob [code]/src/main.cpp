@@ -149,7 +149,8 @@ void setup() {
     updateDisplay(profiles[KeyProfileIndex]);
     delay(300);
     drawKeyIcons();
-    updateBatteryStatus();
+    //updateBatteryStatus();
+    drawBatteryIcon(280, 5, 100); 
     //drawBLEStatusIcon(true); 
 }
 

@@ -11,7 +11,7 @@
 #define I2C_SCL              21
 
 // ---------------- COSTANTI ----------------
-#define SLEEP_TIME           600000    // 10 minuti
+// #define SLEEP_TIME           600000    // 10 minuti
 #define NUM_KEY_PROFILES     3
 #define NUM_ENCODER_PROFILES 3
 
